@@ -33,6 +33,10 @@ namespace MovieRating.DB.Service
 
             public void DeleteCommentById(int commentId) => _dbService.DeleteById(commentId);
 
+            public void DeleteCommentByUserIdMovieId(int userId, int movieId) => _dbService.DeleteByUserIdMovieId(userId, movieId);
+
+            public void DeleteCommentsByUserId(int userId) => _dbService.DeleteByUserId(userId);
+
 
             public List<Comment> GetAllComments() => _dbService
                 .All()
@@ -45,14 +49,28 @@ namespace MovieRating.DB.Service
                 .Select(entity => MovieRatingMapper.ToComment(entity))
                 .ToList();
 
+            public List<Comment> GetByMovieId(int movieId) => _dbService
+                .GetByMovieId(movieId)
+                .Select(entity => MovieRatingMapper.ToComment(entity))
+                .ToList();
+
 
             public Comment GetCommentById(int commentId) =>
                 MovieRatingMapper.ToComment(_dbService.GetById(commentId));
+
+                public Comment GetByUserIdMovieId(int userId, int movieId) =>
+                MovieRatingMapper.ToComment(_dbService.GetByUserIdMovieId(userId, movieId));
 
 
             public Comment UpdateCommentById(int commentId, Comment updatedComment)
             {
                 MovieRatingEntity commentEntity = _dbService.UpdateById(commentId, MovieRatingMapper.ToCommentEntity(updatedComment));
+                return MovieRatingMapper.ToComment(commentEntity);
+            }
+
+            public Comment UpdateCommentByUserIdAndMovieId(int userId, int movieId, Comment updatedComment)
+            {
+                MovieRatingEntity commentEntity = _dbService.UpdateByUserIdMovieId(userId, movieId, MovieRatingMapper.ToCommentEntity(updatedComment));
                 return MovieRatingMapper.ToComment(commentEntity);
             }
         }

@@ -15,15 +15,14 @@ class RatingController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return 'Illuminate\Http\JsonResponse'
      */
     public function index()
     {
         return response()->Json(
-            [
-                new RatingCollection(Rating::all()),
-                'Response Status' => Response::HTTP_OK
-            ]
+            DB::table('ratings')->
+            select('movie_id', 'movie_rating', 'user_id')->
+            get(),
         );
     }
 
@@ -31,7 +30,7 @@ class RatingController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return 'Illuminate\Http\JsonResponse'
      */
     public function store(Request $request)
     {
@@ -64,7 +63,6 @@ class RatingController extends Controller
 
         return response()->json([
             new RatingResource($rating),
-            'Response Status' => Response::HTTP_OK
         ]);
     }
 
@@ -72,7 +70,7 @@ class RatingController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
+     * @return 'Illuminate\Http\JsonResponse'
      */
     public function show(Rating $rating)
     {
@@ -89,7 +87,7 @@ class RatingController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
+     * @return 'Illuminate\Http\JsonResponse'
      */
     public function update(Request $request, Rating $rating)
     {
@@ -130,11 +128,34 @@ class RatingController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
+     * @return 'Illuminate\Http\JsonResponse'
      */
-    public function destroy(Rating $rating)
+    public function destroy($user_id, $movie_id)
     {
-        $rating->delete();
+        DB::table('ratings')->
+        select('movie_rating', 'user_id', 'movie_id')->
+        where('user_id', '=', $user_id)->
+        where('movie_id', '=', $movie_id)->
+        delete();
+
+        return response()->json([
+            'message' => 'Rating Deleted!',
+            'Response Status' => Response::HTTP_NO_CONTENT
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Rating  $rating
+     * @return 'Illuminate\Http\JsonResponse'
+     */
+    public function destroyByUserId($user_id)
+    {
+        DB::table('ratings')->
+        select('movie_rating', 'user_id', 'movie_id')->
+        where('user_id', '=', $user_id)->
+        delete();
 
         return response()->json([
             'message' => 'Rating Deleted!',
@@ -146,7 +167,7 @@ class RatingController extends Controller
      * Get all movie ratings by their movie_id
      * 
      * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
+     * @return 'Illuminate\Http\JsonResponse'
      */
     public function getMovieRatingsByMovieId($movie_id)
     {
@@ -167,7 +188,7 @@ class RatingController extends Controller
      * Get all movie ratings by their user_id
      * 
      * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
+     * @return 'Illuminate\Http\JsonResponse'
      */
     public function getMovieRatingsByUserId($user_id)
     {
@@ -188,21 +209,17 @@ class RatingController extends Controller
      * Get all movie ratings by their user_id AND movie_id
      * 
      * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
+     * @return 'Illuminate\Http\JsonResponse'
      */
     public function getMovieRatingsByUserIdAndMovieId($user_id, $movie_id)
     {
     
         return response()->Json(
-            [
-                DB::table('ratings')->
-                select('movie_rating')->
-                where('user_id', '=', $user_id)->
-                where('movie_id', '=', $movie_id)->
-                get(),
-
-                'Response Status' => Response::HTTP_OK
-            ]
+            DB::table('ratings')->
+            select('movie_id', 'movie_rating', 'user_id')->
+            where('user_id', '=', $user_id)->
+            where('movie_id', '=', $movie_id)->
+            get()->first()       
         );
     }
 }

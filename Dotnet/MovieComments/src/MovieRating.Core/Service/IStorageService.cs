@@ -14,11 +14,23 @@ namespace MovieRating.Core.Model
 
         public List<Comment> GetByUserId(int userId);
 
+        public List<Comment> GetByMovieId(int movieId);
+
+        public Comment GetByUserIdMovieId(int userId, int movieId);
+
         public Comment AddComment(Comment comment);
 
         public Comment UpdateCommentById(int commentId, Comment updatedComment);
 
+        public Comment UpdateCommentByUserIdAndMovieId(int userId, int movieId, Comment updatedComment);
+
         public void DeleteCommentById(int commentId);
+
+        public void DeleteCommentByUserIdMovieId(int userId, int movieId);
+
+        public void DeleteCommentsByUserId(int userId);
+
+
     }
 }
 

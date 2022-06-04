@@ -1,0 +1,36 @@
+
+.container-fluid{
+    background-image: url("../../assets/tempo.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: -50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bt{
+    margin-top: 0%;
+}
+
+div.position-absolute {
+    background-color: rgba(128, 128, 128, 0.507);
+    padding: 80px 150px;
+}
+
+div.ListaFilm{
+    display: none;
+}
+
+.btn btn-primary:active{
+    div.ListaFilm{
+        display: block;
+    }
+
+    .container-fluid vh-100{
+        display: none;
+    }
+    
+}
+
+
+

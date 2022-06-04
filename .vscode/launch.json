@@ -2,6 +2,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch UserManagementApplication",
+            "request": "launch",
+            "mainClass": "com.thenetvalue.userManagement.UserManagementApplication",
+            "projectName": "userManagement"
+        },
+        {
+            "type": "java",
+            "name": "Launch MoviesApplication",
+            "request": "launch",
+            "mainClass": "com.themoviedb.movies.MoviesApplication",
+            "projectName": "movies"
+        },
+        {
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",

@@ -1,0 +1,39 @@
+
+h2{
+    text-align: center;
+}
+
+h2 img{
+    width: 55px;
+    height: 55px; 
+}
+
+div.commenti,  div.image{
+    margin:0 2px;
+    padding:0;
+}
+
+div.commenti{
+    background-color: #0d6efd;
+    border: solid 2px black;  
+    width: 350px; 
+    height: 450px;
+    float: right;  
+}
+
+div.image{
+    float: left;
+}
+
+div.commenti .commento{
+    background-color: white;
+    border: solid 2px black;
+    border-radius: 10px 10px 10px 10px;
+    padding:2%; 
+}
+
+.commento .username{
+    background-color: rgb(2, 236, 253);
+    border-radius: 10px 10px 10px 10px;
+    max-width:fit-content;
+}

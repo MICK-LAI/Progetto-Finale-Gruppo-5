@@ -1,0 +1,228 @@
+<app-navbar></app-navbar>
+<!-- Modal -->
+ <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">ATTENZIONE</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Sei sicuro vi voler eliminare tutti i film dalla tua lista?</p>
+        <p>L'azione è <strong>IRREVERSIBILE</strong>!!!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ho cambiato idea</button>
+        <button type="button" class="btn btn-danger" (click)="svuotaLista()">Svuota Lista</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OffCanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Opzioni</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <button class="btn btn-info" routerLink="/movie-game">Back To Play</button><br><br>
+<!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      Svuota Lista
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!isListaVuota()">
+  <div class="more">
+    <a  class="btn btn-info" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+    </a>
+  </div>
+  
+  <div *ngFor="let movie of moviesTMDB; let i = index">
+    <div class="row align-items-center">
+      <div class="block-texts col-item col-xs-12 col-sm-12 col-md-6 col-lg-6 order-xs-1 order-sm-1 order-md-2 order-lg-2">
+        <div class="heading">
+          <h2 class="h h-block">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">{{movie?.original_title}}</font>
+            </font>
+          </h2>
+          </div>
+          <div class="text">
+            <p></p>
+            <div *ngIf="findComment(movie.id)">
+              <i class="bi bi-chat-left-quote-fill">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-quote-fill" viewBox="0 0 16 16">
+                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm7.194 2.766a1.688 1.688 0 0 0-.227-.272 1.467 1.467 0 0 0-.469-.324l-.008-.004A1.785 1.785 0 0 0 5.734 4C4.776 4 4 4.746 4 5.667c0 .92.776 1.666 1.734 1.666.343 0 .662-.095.931-.26-.137.389-.39.804-.81 1.22a.405.405 0 0 0 .011.59c.173.16.447.155.614-.01 1.334-1.329 1.37-2.758.941-3.706a2.461 2.461 0 0 0-.227-.4zM11 7.073c-.136.389-.39.804-.81 1.22a.405.405 0 0 0 .012.59c.172.16.446.155.613-.01 1.334-1.329 1.37-2.758.942-3.706a2.466 2.466 0 0 0-.228-.4 1.686 1.686 0 0 0-.227-.273 1.466 1.466 0 0 0-.469-.324l-.008-.004A1.785 1.785 0 0 0 10.07 4c-.957 0-1.734.746-1.734 1.667 0 .92.777 1.666 1.734 1.666.343 0 .662-.095.931-.26z"></path>
+                </svg>
+                {{comment?.comment}}
+              </i>               
+            </div>
+            <p></p>
+          </div>
+          <div class="text">
+            <p></p>
+            <div *ngIf="findRating(movie.id)">
+              <div class="stars" [ngSwitch]="rating?.movie_rating">
+                <h3 *ngSwitchCase="1" width="16" height="16"> <font style="vertical-align: inherit;">★</font></h3>
+                <h3 *ngSwitchCase="2" width="16" height="16"> <font style="vertical-align: inherit;">★★</font></h3>
+                <h3 *ngSwitchCase="3" width="16" height="16"> <font style="vertical-align: inherit;">★★★</font></h3>
+                <h3 *ngSwitchCase="4" width="16" height="16"> <font style="vertical-align: inherit;">★★★★</font></h3>
+                <h3 *ngSwitchCase="5" width="16" height="16"> <font style="vertical-align: inherit;">★★★★★</font></h3>
+              </div>
+            </div>
+            <p></p>
+          </div>          
+          <div class="text">
+            <p></p>
+            <button  class="btn btn-primary" (click)="deleteMoviefavour(movie.id)" > Cancella dalla tua lista</button>
+            <p></p>
+          </div>
+        </div>
+        <div class="block-images col-item col-xs-12 col-sm-12 col-md-6 col-lg-6 order-xs-2 order-sm-2 order-md-1 order-lg-1">
+          <img src="https://image.tmdb.org/t/p/w300{{movie?.poster_path}}"  alt={{movie?.title}}>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  
+  
+
+  
+  <!--
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+  </div>
+
+  <div class="card" style="width: 25rem;">
+    <div class="carousel-inner">
+      
+      <div *ngFor="let movie of moviesTMDB; let i = index">
+        <div *ngIf="i == x" class="carousel-item-active">
+          <img src="https://image.tmdb.org/t/p/w300{{movie?.poster_path}}" class="card-img-top" alt={{movie?.title}}>
+          
+            <h1>{{movie?.original_title}}</h1>
+              
+            <div *ngIf="findRating(movie.id)">
+              <h3>Valutazione:</h3>
+              <div class="stars" [ngSwitch]="rating?.movie_rating">
+                <h3 *ngSwitchCase="1"> ★</h3>
+                <h3 *ngSwitchCase="2"> ★ ★</h3>
+                <h3 *ngSwitchCase="3"> ★ ★ ★</h3>
+                <h3 *ngSwitchCase="4"> ★ ★ ★ ★</h3>
+                <h3 *ngSwitchCase="5"> ★ ★ ★ ★ ★</h3>
+              </div>
+            </div>
+              
+              
+            <div *ngIf="findComment(movie.id)">
+              <h3 >Commento: </h3>
+              <h5 class="rating">{{comment?.comment}}</h5>
+            </div>
+              
+            <button  class="btn btn-primary" (click)="deleteMoviefavour(movie.id)" > Cancella dalla tua lista</button>
+          
+          </div>
+        </div>
+      </div >
+      
+      <button (click)="decrement()" class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button (click)="increment()" class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+      
+    </div>
+  
+    <button (click)="svuotaLista()" type="button">Svuota Lista</button>
+  
+  </div>
+  -->
+  
+
+
+
+
+
+
+<div *ngIf="isListaVuota()">
+  <!--<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <div class="w3-display-middle">
+    <h1 class="w3-jumbo w3-animate-top" >Non sono presenti film nella tua lista preferiti!</h1>
+  </div>
+  <div class="botton-play">
+    <a *ngIf="loginService.isUserLoggedIn()" routerLink="/movie-game" class="nav-link"><button class="btn btn-primary">--- GIOCA ---</button></a>
+  </div>-->
+
+  <section class="Main-content" data-content-field="main-content" id="yui_3_17_2_1_1652351077091_79">
+    <div class="sqs-layout sqs-grid-12 columns-12" data-type="page" data-updated-on="1540834294265" id="page-57a11993b3db2b02a17609d9">
+      <div class="row sqs-row" id="yui_3_17_2_1_1652351077091_78">
+        <div class="col sqs-col-12 span-12" id="yui_3_17_2_1_1652351077091_77">
+          <div class="row sqs-row" id="yui_3_17_2_1_1652351077091_76">
+            <div class="col sqs-col-4 span-4" id="yui_3_17_2_1_1652351077091_75">
+              <div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_5_1470175355201_9379">
+                <div class="sqs-block-content" id="yui_3_17_2_1_1652351077091_74">
+
+                  <div class="image-block-outer-wrapper
+                    layout-caption-below
+                    design-layout-inline
+                    combination-animation-none
+                    individual-animation-none
+                    individual-text-animation-none
+                    sqs-narrow-width" data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1652351077091_73">
+                    <figure class="
+                      sqs-block-image-figure
+                      intrinsic
+                      " style="max-width:1500px;" id="yui_3_17_2_1_1652351077091_72">
+
+                      <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1652351077091_71">
+                        <div class="sqs-image-shape-container-element
+                          has-aspect-ratio
+                          " style="
+                          position: relative;
+                          padding-bottom:135%;    
+                          overflow: hidden;
+                          " id="yui_3_17_2_1_1652351077091_70">
+                          <noscript>
+                            <img src="https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/1470175715831-NUJOMI6VW13ZNT1MI0VB/image-asset.jpeg" alt="" />
+                          </noscript>
+                          <img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/1470175715831-NUJOMI6VW13ZNT1MI0VB/image-asset.jpeg" data-image="https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/1470175715831-NUJOMI6VW13ZNT1MI0VB/image-asset.jpeg" data-image-dimensions="1500x2025" data-image-focal-point="0.5,0.5" alt="" data-load="false" data-image-id="57a119e3f5e23161e8daf73d" data-type="image" style="left: -0.0892459%; top: 0%; width: 100.178%; height: 100%; position: absolute;" data-image-resolution="500w" src="https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/1470175715831-NUJOMI6VW13ZNT1MI0VB/image-asset.jpeg?format=500w">
+                        </div>
+                      </div>
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col sqs-col-8 span-8">
+              <div class="sqs-block spacer-block sqs-block-spacer" data-aspect-ratio="11.11111111111111" data-block-type="21" id="block-yui_3_17_2_7_1474913903083_6419">
+                <div class="sqs-block-content sqs-intrinsic" id="yui_3_17_2_1_1652351077091_99" style="padding-bottom: 11.1111%;">&nbsp;
+                </div>
+              </div>
+              <div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-396ef71ce5d4fd132f64">
+                <div class="sqs-block-content">
+                  <h1 style="text-align: center; white-space: pre-wrap;">Awww...Don’t Cry.</h1>
+                  <p style="text-align: center; white-space: pre-wrap;">Lista Film Preferiti Vuota <br><a routerLink="/movie-game">Clicca qui per giocare e aggiungere film alla tua lista.</a><br><br>&nbsp;</p>
+                  <p style="white-space: pre-wrap;">&nbsp;</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

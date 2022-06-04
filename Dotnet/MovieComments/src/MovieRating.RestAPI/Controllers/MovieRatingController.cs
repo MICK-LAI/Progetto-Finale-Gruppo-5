@@ -4,6 +4,7 @@ using MovieRating.Core.Eccezzioni;
 using MovieRating.Core.Model;
 using MovieRating.RestAPI.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 using MovieRating.DB.Service;
 
 namespace MovieRating.RestAPI.Controllers
@@ -22,14 +23,34 @@ namespace MovieRating.RestAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Comment>> GetAll([FromQuery(Name = "user-id")] int userId = 0)
-        {
-            if (userId > 0)
+        public ActionResult<List<Comment>> GetAll()=> Ok(_movieRatingService.GetAllComments());
+
+
+        [HttpGet]
+        [Route("movieId/{movie-id}")]
+        public ActionResult<List<Comment>> GetAllByMovieId([FromRoute(Name = "movie-id")] int movieId) {
+            try
+            {
+                return Ok(_movieRatingService.GetAllCommentsByMovieId(movieId));
+            }
+            catch (NotFoundCommentsByMovieId e)
+            {
+                return NotFound(BuildErrorResponse(e));
+            }
+        }
+        
+
+        [HttpGet]
+        [Route("userId/{user-id}")]
+        public ActionResult<List<Comment>> GetAllByUserId([FromRoute(Name = "user-id")] int userId) {
+            try
             {
                 return Ok(_movieRatingService.GetAllCommentsByUserId(userId));
             }
-
-            return Ok(_movieRatingService.GetAllComments());
+            catch (NotFoundCommentsByUserId e)
+            {
+                return NotFound(BuildErrorResponse(e));
+            }
         }
 
         [HttpGet]
@@ -41,6 +62,20 @@ namespace MovieRating.RestAPI.Controllers
                 return Ok(_movieRatingService.GetCommentById(commentId));
             }
             catch (NotFoundComment e)
+            {
+                return NotFound(BuildErrorResponse(e));
+            }
+        }
+
+        [HttpGet]
+        [Route("{user-id}/{movie-id}")]
+        public ActionResult<Comment> GetByUserIdMovieId([FromRoute(Name = "user-id")] int userId, [FromRoute(Name = "movie-id")] int movieId )
+        {
+            try
+            {
+                return Ok(_movieRatingService.GetCommentByUserIdMovieId(userId, movieId));
+            }
+            catch (NotFoundCommentByUserIdAndMovieId e)
             {
                 return NotFound(BuildErrorResponse(e));
             }
@@ -104,6 +139,29 @@ namespace MovieRating.RestAPI.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("{user-id}/{movie-id}")]
+        public ActionResult<Comment> Update([FromBody] MovieRatingDTO comment, [FromRoute(Name = "user-id")] int userId, [FromRoute(Name = "movie-id")] int movieId)
+        {
+            try
+            {
+                return Ok(_movieRatingService.UpdateCommentByUserIdAndMovieId(userId, movieId, new()
+                {
+                    comment = comment.comment,
+                    user_id = userId,
+                    movie_id = movieId
+                }));
+            }
+            catch (NotFoundCommentByUserIdAndMovieId e)
+            {
+                return NotFound(BuildErrorResponse(e));
+            }
+            catch (ShortComment e)
+            {
+                return BadRequest(BuildErrorResponse(e));
+            }
+        }
+
         [HttpDelete]
         [Route("{comment-id}")]
         public ActionResult Delete([FromRoute(Name = "comment-id")] int commentId)
@@ -114,6 +172,36 @@ namespace MovieRating.RestAPI.Controllers
                 return NoContent();
             }
             catch (NotFoundComment e)
+            {
+                return NotFound(BuildErrorResponse(e));
+            }
+        }
+
+        [HttpDelete]
+        [Route("{user-id}/{movie-id}")]
+        public ActionResult DeletebyUserIdAndMovieId([FromRoute(Name = "user-id")] int userId, [FromRoute(Name = "movie-id")] int movieId)
+        {
+            try
+            {
+                _movieRatingService.DeleteCommentByUserIdMovieId(userId, movieId);
+                return NoContent();
+            }
+            catch (NotFoundCommentByUserIdAndMovieId e)
+            {
+                return NotFound(BuildErrorResponse(e));
+            }
+        }
+
+        [HttpDelete]
+        [Route("userId/{user-id}")]
+        public ActionResult DeleteCommentsByUserId([FromRoute(Name = "user-id")] int userId)
+        {
+            try
+            {
+                _movieRatingService.DeleteCommentsByUserId(userId);
+                return NoContent();
+            }
+            catch (NotFoundCommentsByUserId e)
             {
                 return NotFound(BuildErrorResponse(e));
             }

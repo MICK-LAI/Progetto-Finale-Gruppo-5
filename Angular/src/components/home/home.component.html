@@ -8,187 +8,21 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
     crossorigin="anonymous">
 
-    <style>
-        .header {
-            height: 13vh;
-            background-color: #296aa3;
-        }
-
-        .main {
-            height: 80vh;
-        }
-
-        .sidebar {
-            background-color: #19b3d5;
-        }
-
-        .sidebar .list-group-item {
-            border: 1px solid rgba(0, 0, 0, .125) !important;
-            background-color: #296aa3;
-        }
-
-        .content {
-            background-color: #296aa3;
-        }
-
-        .content .card {
-            background-color: #19b3d5;
-        }
-
-        .footer {
-            height: 10vh;
-            background-color: #FAEBD7;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                height: 20vh !important;
-            }
-        }
-    </style>
+    
 </head>
 
 <body>
-    <div class="container-fluid vh-100">
-        <div class="row border header">
-            <div class="col-12">
-                <h1>The Movie App</h1> 
-            </div>
-        </div>
-        <div class="bt">
-        <button (click)="isVisible = !isVisible">{{isVisible ? 'Hide' : 'Sviluppatori progetto'}}</button>
-        <h1 [hidden]="!isVisible">Stefano, Michele, Edivan, Andrea </h1>
-        </div>
-        <div class="row border overflow-hidden main">
-            <div class="col-12 col-md-2 h-100 overflow-auto border sidebar">
-                Film Preferiti
-                <ul class="list-group flex-sm-column flex-row">
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                    <li class="list-group-item m-1">Sidebar item</li>
-                </ul>
-            </div>
-            <div class="col-12 col-md-10 border overflow-auto h-100 content">
-                Lista Film
-                <div class="row">
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="card my-2">
-                            <div class="card-body">
-                                <h3 class="card-title">Title</h3>
-                                <p class="card-text">Text</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row border footer">
-            <div class="col-12">
-                FOOTER
-            </div>
-        </div>
-    </div>
+    <app-navbar></app-navbar>
+   
 
+    
+    <div class="container-fluid vh-100">
+        <h2 class="scrt">Cerca i film che ti piaccionon di piu' o che non ancora conosci filtrando per data di uscita e salvali nei tuoi preferiti!</h2>
+        <a *ngIf="loginService.isUserLoggedIn()" routerLink="/movie-game" class="nav-link"><button class="btn"> AVVIA </button></a>
+        
+    </div>
+    
+    <app-footer></app-footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -202,4 +36,5 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 </body>
+
 

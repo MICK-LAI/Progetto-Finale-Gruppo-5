@@ -30,10 +30,33 @@ namespace MovieRating.DB.Service
             return comment;
         }
 
-        public List<MovieRatingEntity> GetByUserId(int userId) => _contextManager
+        public MovieRatingEntity GetByUserIdMovieId(int userId, int movieId)
+        {
+            var comment = FindCommentOrFailUserIdMovieId(userId, movieId);
+            return comment;
+        }
+
+        public List<MovieRatingEntity> GetByUserId(int userId) {
+            
+            var comment = FindUserIdOrFail(userId);
+
+            return _contextManager
             .Comments
             .Where(c => c.UserId == userId)
             .ToList();
+
+        }
+
+        public List<MovieRatingEntity> GetByMovieId(int movieId) {
+            
+            var comment = FindMovieIdOrFail(movieId);
+
+            return _contextManager
+            .Comments
+            .Where(c => c.MovieId == movieId)
+            .ToList();
+
+        }
 
         public MovieRatingEntity Add(MovieRatingEntity comment)
         {
@@ -50,12 +73,39 @@ namespace MovieRating.DB.Service
             return comment;
         }
 
+         public MovieRatingEntity DeleteByUserIdMovieId(int userId, int movieId)
+        {
+            var comment = FindCommentOrFailUserIdMovieId(userId, movieId);
+            _contextManager.Comments.Remove(comment);
+            _contextManager.SaveChanges();
+            return comment;
+        }
+
+        public List<MovieRatingEntity> DeleteByUserId(int userId)
+        {
+            var comments = FindCommentsByUserIdOrFail(userId);
+            _contextManager.Comments.RemoveRange(comments);
+            _contextManager.SaveChanges();
+            return comments;
+        }
         public MovieRatingEntity UpdateById(int id, MovieRatingEntity comment)
         {
             var previousComment = FindCommentOrFail(id);
 
             previousComment.MovieId = comment.MovieId;
             previousComment.UserId = comment.UserId;
+            previousComment.Body = comment.Body;
+            _contextManager.SaveChanges();
+
+            return previousComment;
+        }
+
+        public MovieRatingEntity UpdateByUserIdMovieId(int userId, int movieId, MovieRatingEntity comment)
+        {
+            var previousComment = FindCommentOrFailUserIdMovieId(userId, movieId);
+
+            previousComment.MovieId = movieId;
+            previousComment.UserId = userId;
             previousComment.Body = comment.Body;
             _contextManager.SaveChanges();
 
@@ -71,6 +121,53 @@ namespace MovieRating.DB.Service
             }
 
             return comment;
+        }
+
+         private MovieRatingEntity FindUserIdOrFail(int userId)
+        {
+            var comment = _contextManager.Comments.FirstOrDefault(x => x.UserId == userId);
+            if (comment == null)
+            {
+                throw new NotFoundUserId(userId);
+            }
+
+            return comment;
+        }
+
+          private MovieRatingEntity FindMovieIdOrFail(int movieId)
+        {
+            var comment = _contextManager.Comments.FirstOrDefault(x => x.MovieId == movieId);
+            if (comment == null)
+            {
+                throw new NotFoundCommentsByMovieId(movieId);
+            }
+
+            return comment;
+        }
+        private MovieRatingEntity FindCommentOrFailUserIdMovieId(int userId, int movieId)
+        {
+           var comment = _contextManager.Comments.FirstOrDefault(x => x.UserId == userId && x.MovieId == movieId);
+            if (comment == null)
+            {
+                throw new NotFoundCommentByUserIdAndMovieId(userId, movieId);
+            }
+
+            return comment;
+        }
+
+        private List<MovieRatingEntity> FindCommentsByUserIdOrFail(int userId)
+        {
+            var comments = _contextManager
+            .Comments
+            .Where(c => c.UserId == userId)
+            .ToList();
+
+            if (comments.Count == 0)
+            {
+                throw new NotFoundCommentsByUserId(userId);
+            }
+
+            return comments;
         }
 
     }

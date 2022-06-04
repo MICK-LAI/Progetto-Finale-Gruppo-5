@@ -1,0 +1,11 @@
+{
+    "spring.initializr.defaultArtifactId": "userManagement",
+    "spring.initializr.defaultGroupId": "com.thenetvalue",
+    "spring.initializr.defaultJavaVersion": "11",
+    "spring.initializr.defaultLanguage": "Java",
+    "spring.initializr.defaultPackaging": "WAR",
+    "spring.initializr.serviceUrl": [
+        "https://start.spring.io"
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

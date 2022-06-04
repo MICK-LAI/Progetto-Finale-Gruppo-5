@@ -1,0 +1,74 @@
+
+.container-fluid {
+    background-image: url('../../assets/cinemaPerHomeComponent.jpg');
+    padding:0;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: fixed;
+    background-position-y: -10vw;
+}
+
+.container-fluid img {
+    width: 100%;
+}
+
+.btn{
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    color: transparent;
+    text-shadow: 0px 0px 5px white;
+    font-size: 5vw;
+    margin-top: auto;
+}
+
+.nav-link{
+
+    width: 100%;
+}
+
+.scrt{
+    margin-top: 60px;
+    color: #FAEBD7;
+    font-size: 3vw;
+    text-align: center;
+    text-shadow: 2px 0px 10px rgb(209, 114, 114);
+}
+
+.header {
+    height: 13vh;
+    background-color: #296aa3;
+}
+
+.main {
+    height: 80vh;
+}
+
+.sidebar {
+    background-color: #19b3d5;
+}
+
+.sidebar .list-group-item {
+    border: 1px solid rgba(0, 0, 0, .125) !important;
+    background-color: #296aa3;
+}
+
+.content {
+    background-color: #296aa3;
+}
+
+.content .card {
+    background-color: #19b3d5;
+}
+
+.footer {
+    height: 8vh;
+    background-color: #FAEBD7;
+    
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        height: 20vh !important;
+    }
+}

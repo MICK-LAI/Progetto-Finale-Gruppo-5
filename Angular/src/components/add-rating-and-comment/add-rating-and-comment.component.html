@@ -1,0 +1,18 @@
+<app-navbar></app-navbar>
+<div class="column">
+<div class="card" style="width: 250px;">
+    <img src="https://image.tmdb.org/t/p/w300{{movieTMDB?.poster_path}}" class="card-img-top" alt="{{movieTMDB?.title}}">
+    <div class="card-body">
+      <h3 class="card-title">{{movieTMDB?.original_title}}</h3>
+    </div>
+</div>
+</div>
+<div class="column">
+  <div class="sec">
+    <app-movie-rating [movieId]="movieId" [userId]="userId"></app-movie-rating>
+    
+    <app-add-movie-comment [movieId]="movieId" [userId]="userId"></app-add-movie-comment>
+    <hr>
+    <button class="btn btn-primary" (click)="goBack()">Torna alla lista film</button>
+  </div>
+</div>

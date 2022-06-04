@@ -37,10 +37,26 @@ namespace MovieRating.Core.Service.Impl
             return _comments.Where(c => c.user_id == userId).ToList();
         }
 
+        public List<Comment> GetByMovieId(int movieId)
+        {
+            return _comments.Where(c => c.movie_id == movieId).ToList();
+        }
+
         public void DeleteCommentById(int commentId)
         {
             Comment commentToDelete = FindCommentOrFail(commentId);
             _comments.Remove(commentToDelete);
+        }
+
+        public void DeleteCommentByUserIdMovieId(int userId, int movieId)
+        {
+            Comment commentToDelete = FindCommentOrFailUserIdMovieId(userId, userId);
+            _comments.Remove(commentToDelete);
+        }
+
+        public void DeleteCommentsByUserId(int userId)
+        {
+            _comments.RemoveAll(c => c.user_id == userId);
         }
 
         public List<Comment> GetAllComments()
@@ -53,9 +69,26 @@ namespace MovieRating.Core.Service.Impl
             return FindCommentOrFail(commentId);
         }
 
+        public Comment  GetByUserIdMovieId(int userId, int movieId)
+        {
+            return FindCommentOrFailUserIdMovieId(userId, movieId);
+        }
+
+       
+
         public Comment UpdateCommentById(int commentId, Comment updatedComment)
         {
             Comment commentToUpdate = FindCommentOrFail(commentId);
+            commentToUpdate.comment = updatedComment.comment;
+            commentToUpdate.user_id = updatedComment.user_id;
+            commentToUpdate.movie_id = updatedComment.movie_id;
+
+            return commentToUpdate;
+        }
+
+        public Comment UpdateCommentByUserIdAndMovieId(int userId, int movieId, Comment updatedComment)
+        {
+            Comment commentToUpdate = FindCommentOrFailUserIdMovieId(userId, movieId);
             commentToUpdate.comment = updatedComment.comment;
             commentToUpdate.user_id = updatedComment.user_id;
             commentToUpdate.movie_id = updatedComment.movie_id;
@@ -73,6 +106,16 @@ namespace MovieRating.Core.Service.Impl
 
             return commentToSearch;
         }
+
+        private Comment FindCommentOrFailUserIdMovieId(int userId, int movieId)
+        {
+            Comment commentToSearch = _comments.FirstOrDefault(c => c.user_id == userId && c.movie_id== movieId);
+
+            if (commentToSearch == null) throw new NotFoundCommentByUserIdAndMovieId(userId, movieId);
+
+            return commentToSearch;
+        }
+
     }
 }
 

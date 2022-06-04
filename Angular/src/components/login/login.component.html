@@ -1,1 +1,30 @@
-<p>login works!</p>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="../../assets/user.png" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form  #loginForm="ngForm" (ngSubmit)="checkLogin(loginForm)">    
+      <input type="text" id="login" class="fadeIn second" placeholder="Username" name="username" ngModel required>
+      <div>
+        <input (dblclick)="showPwd = !showPwd" [type]="showPwd ? 'text' : 'password'" id="pwd" class="fadeIn third" name="password" placeholder="Password" ngModel required  title='Fai doppio click per mostrare/nascondere la password'>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      Don't have an account? <a href="../registration/">Signup</a>
+    </div>
+
+  </div>
+</div>
