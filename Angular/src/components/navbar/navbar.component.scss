@@ -5,3 +5,14 @@ a {
 #github {
    height: 32px;
 }
+
+a.navbar-brand {
+    font-size: 25px;
+    color: black;
+    transition: 1s;
+}
+
+a.navbar-brand:hover {
+    color: grey;
+    transition: 1s;
+}

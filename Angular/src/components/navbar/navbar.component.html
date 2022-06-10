@@ -1,3 +1,4 @@
+<!--
 <nav class="navbar navbar-light bg-light" aria-label="First navbar example">
   <div class="container-fluid">
     <a class="navbar-brand" href="../home/">
@@ -8,6 +9,27 @@
       <a class="nav-link" *ngIf="loginService.isUserLoggedIn()"  routerLink="/listFavouMovie" class="nav-link">Film preferiti</a>
       <a class="nav-link" *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a>
 
+        
+
+    </div>
+</nav>
+-->
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="../home/">
+      <img src="../../assets/favicon.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+      Film&History
+      </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="loginService.isUserLoggedIn()"  routerLink="/listFavouMovie" class="nav-link">Lista preferiti</a>
+        </li>
+
         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">GitHub Sviluppatori</a>
         <ul class="dropdown-menu" aria-labelledby="dropdown01">
           <li><a class="dropdown-item" href="https://github.com/AndreaOrru53" target="_blank"><img id="github" src="../../assets/github.ico">Andrea Orrù</a></li>
@@ -16,5 +38,8 @@
           <li><a class="dropdown-item" href="https://github.com/stecerto" target="_blank"><img id="github" src="../../assets/github.ico">Stefano Certo</a></li>
         </ul>
 
+      </ul>
+        <a class="nav-link" *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a>
     </div>
+  </div>
 </nav>
